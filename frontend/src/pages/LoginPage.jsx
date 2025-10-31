@@ -1,6 +1,9 @@
 import "../styles/login.css";
 import logo from "../assets/logo.png";
 import { Link } from "react-router";
+import { mensaje } from "../routes/UserRoutes";
+import { useEffect } from "react";
+
 function UserPage() {
   return (
     <div className="contenedor-principal">
@@ -36,19 +39,25 @@ function UserPage() {
               <label htmlFor="password" className="form__label">
                 Contraseña
               </label>
+              <Link className="links">¿Olvidaste la contraseña?</Link>
             </div>
+            <div></div>
             <button className="boton-inicio" type="submit">
               Ingresar
             </button>
           </form>
         </div>
         <div className="rframe2">
-          <p>
-            ¿No tienes cuenta?<Link to={"/"}>aaaa</Link>
-          </p>
+          <div className="redireccion">
+            <p>¿No tienes una cuenta? </p>
+            <Link to={"/sign_up"} className="links">
+              Crea una cuenta.
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 export default UserPage;
