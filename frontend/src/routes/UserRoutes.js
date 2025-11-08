@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios from "axios";
 
-const route = "http://127.0.0.1:8000"
+const baseURL = "http://127.0.0.1:8000";
 
-
-export const mensaje = () => (axios.get(route+'/mensaje/'))
+export const ValidarUsuario = (data) => axios.post(baseURL + "/valuser/", data);
+export const registroUsuario = (data) =>
+  axios.post(baseURL + "/resgisteruser/", data);

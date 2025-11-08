@@ -1,0 +1,10 @@
+.contenedor_main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.contenedor_sidebar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}

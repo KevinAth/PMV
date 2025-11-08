@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import Mensaje
+from . import views
 
 urlpatterns = [
-    path('mensaje/',Mensaje, name='mensaje'),
+    path('valuser/',views.ValidarUsuario, name='validar_usuario'),
+    path('resgisteruser/',views.RegistrarUsuario, name='registrar_usuario')
 ]

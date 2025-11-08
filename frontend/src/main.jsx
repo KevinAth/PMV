@@ -4,6 +4,11 @@ import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import App from "./App.jsx";
 import RegisterUserPage from "./pages/RegisterUserPage.jsx";
 import UserPage from "./pages/LoginPage.jsx";
+import Dashboard from "./pages/dashboard.jsx";
+import "./index.css";
+import Inventario from "./pages/Inventario.jsx";
+import Proveedores from "./pages/Proveedores.jsx";
+import Movimientos from "./pages/Movimientos.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +23,28 @@ const router = createBrowserRouter([
   {
     path: "/sign_up",
     element: <RegisterUserPage />,
+  },
+  {
+    path: "/panel_inicio",
+    element: <Dashboard />,
+    children: [
+      {
+        index: true,
+        element: <Inventario />,
+      },
+      {
+        path: "inventario",
+        element: <Inventario />,
+      },
+      {
+        path: "proveedores",
+        element: <Proveedores />,
+      },
+      {
+        path: "movimientos",
+        element: <Movimientos />,
+      },
+    ],
   },
 ]);
 

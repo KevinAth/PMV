@@ -10,25 +10,27 @@ body {
   background-color: #0f172b;
   color: white;
   line-height: 1.6;
+
+  justify-content: center;
 }
 
 .contenedor-principal {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  align-items: center;
   padding: 20px;
+  height: 100vh;
 }
 
 .contenedor-secundario {
-  width: 100%;
+  min-width: auto;
   max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .rframe {
   width: 100%;
   background-color: #020618;
@@ -41,6 +43,7 @@ body {
   gap: 2rem;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
+
 .rframe2 {
   width: 100%;
   background-color: #02061898;
@@ -72,7 +75,7 @@ body {
 }
 
 .logo {
-  width: 30%;
+  width: 40%;
   max-width: 300px;
   height: auto;
   display: block;
@@ -179,8 +182,9 @@ body {
   display: flex;
   align-items: center;
 }
+
 .links {
   color: #11998e;
   text-decoration: none;
-  margin: 5PX;
+  margin: 5px;
 }

@@ -1,19 +1,27 @@
-import "../styles/login.css";
+import "../styles/login.module.css";
 import logo from "../assets/logo.png";
-import { Link } from "react-router";
-import { mensaje } from "../routes/UserRoutes";
-import { useEffect } from "react";
+import { Link, useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { ValidarUsuario } from "../routes/UserRoutes";
 
 function UserPage() {
+  const navigate = useNavigate();
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) =>
+    ValidarUsuario(data).then((response) => {
+      navigate("/panel_inicio");
+    });
+
   return (
-    <div className="contenedor-principal">
+    <div className={"contenedor-principal"}>
       <div className="contenedor-secundario">
         <div className="rframe">
           <div>
             <img src={logo} alt="----" className="logo" />
           </div>
           <h1 className="tittle-1">Inicio de sesion.</h1>
-          <form className="login-frame">
+          <form className="login-frame" onSubmit={handleSubmit(onSubmit)}>
             <div className="form__group">
               <input
                 type="text"
@@ -23,6 +31,8 @@ function UserPage() {
                 id="username"
                 autoComplete="off"
                 spellCheck="false"
+                {...register("usuario")}
+                required
               />
               <label htmlFor="username" className="form__label">
                 Usuario
@@ -35,6 +45,8 @@ function UserPage() {
                 placeholder="password"
                 name="password"
                 id="password"
+                {...register("password")}
+                required
               />
               <label htmlFor="password" className="form__label">
                 Contraseña
