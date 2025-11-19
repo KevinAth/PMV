@@ -1,52 +1,91 @@
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password,check_password
-from rest_framework.decorators import api_view 
-from django.http import JsonResponse
-from .models import Usuarios
-import json
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view , permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Usuarios,Categorias
 
-
+## Registra Usuarios
 @api_view(['POST'])
-@csrf_exempt
 def RegistrarUsuario(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
+    try:
+        data = request.data
         nuevo_usuario = data.get('usuario')
         nuevo_email = data.get('email')
         password = data.get('password')
         password_val = data.get('password_val')
         
+        if not nuevo_usuario or not nuevo_email or not password or not password_val:
+            return Response({"status":"error","message":"Faltan credenciales para registrar usuario."}, status=status.HTTP_400_BAD_REQUEST)
+
+        
         if password != password_val:
-            print("no chale")
-            return JsonResponse({'Mensage':'Contraseñas no coinciden'})
+            return Response({'status':'error',"message":"Las contraseñas no coinciden."},status=status.HTTP_400_BAD_REQUEST)
         
         hash_pp = make_password(password)
         print(hash_pp)
         Usuarios.objects.create(
-            usuario = nuevo_usuario,
+            username = nuevo_usuario,
             email = nuevo_email,
-            contraseña = hash_pp
+            password = hash_pp
             )
-        
-        return JsonResponse({'mesnaje':'Usuario creado'})
+        return Response({"status":"success","message":"Usuario creado correctamente."},status=status.HTTP_200_OK)
     
-@api_view(['POST'])
-@csrf_exempt       
+    except Exception as e:
+        return Response ({
+            "status":"error",
+            "message" : "Error interno del servidor.",
+            "detail" : str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+## Valida credenciales de un usuario y genera un token.        
+@api_view(['POST'])    
 def ValidarUsuario(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            val_user = data.get('usuario')
-            val_password = data.get('password')
+    try:
+        data = request.data
+        val_user = data.get('usuario')
+        val_password = data.get('password')
+        
+        if not val_user or not val_password:
+            return Response({
+                "status" : "error",
+                "message" : "Faltan credenciales para la autenticacion de usuario."
+            }, status=status.HTTP_400_BAD_REQUEST)
 
-            usuario = Usuarios.objects.get(usuario=val_user)
+        usuario = Usuarios.objects.get(username=val_user)
+        
+        if check_password(val_password, usuario.password):
+            refresh = RefreshToken.for_user(usuario)
+            return Response({
+                "status":"success",
+                "message": "Usuario autenticado.",
+                'refresh' : str(refresh),
+                'access' : str(refresh.access_token)
+            },status=status.HTTP_200_OK)
+        else:
+            return Response({'status': "error", 'message': "Usuario o Contraseña incorrectos."},status=status.HTTP_401_UNAUTHORIZED)
 
-            if check_password(val_password, usuario.contraseña):
-                return JsonResponse({'login': True, 'mensaje': '¡Bienvenido!'})
-            else:
-                return JsonResponse({'login': False, 'mensaje': 'Contraseña incorrecta'})
+    except Usuarios.DoesNotExist:
+        return Response({"status": "error", "message":"Usuario no existe en la base de datos."},status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'status': 'error', 
+                        'message': 'Error interno del servidor.',
+                        "detail":str(e)},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+@api_view(['GET'])#-> tiene esto alguna funcionalidad real, ver a futuro y dependiendo borrar,
+@permission_classes([IsAuthenticated])
+def UserValidate(request):
+    user = request.user
+    data = {"id":user.id,
+            "username":user.username,
+            "email":user.email}
+    return Response({"status":"success","message":"Usuario verificado.","user":data}, status=status.HTTP_200_OK)
 
-        except Usuarios.DoesNotExist:
-            return JsonResponse({'login': False, 'mensaje': 'Usuario no existe'})
-
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def CrearCat(request):
+    Categorias.objects.create(nombre=request.data.get("nombre"))
+    
+    return Response ({"status":"success","message":"Categoria creada correctamente."}, status=status.HTTP_200_OK)

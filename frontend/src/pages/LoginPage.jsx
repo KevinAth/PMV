@@ -1,31 +1,45 @@
-import "../styles/login.module.css";
+import styles from "../styles/login.module.css";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { ValidarUsuario } from "../routes/UserRoutes";
+import { useState } from "react";
 
 function UserPage() {
   const navigate = useNavigate();
-
+  const [message, Setmessage] = useState("");
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) =>
-    ValidarUsuario(data).then((response) => {
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await ValidarUsuario(data);
+      localStorage.setItem("access", response.data.access);
+      localStorage.setItem("refresh", response.data.refresh);
       navigate("/panel_inicio");
-    });
+    } catch (error) {
+      Setmessage(error.response.data.message);
+    }
+  };
 
   return (
-    <div className={"contenedor-principal"}>
-      <div className="contenedor-secundario">
-        <div className="rframe">
+    <div className={styles.contenedor_principal}>
+      <div className={styles.contenedor_secundario}>
+        <div className={styles.rframe}>
           <div>
-            <img src={logo} alt="----" className="logo" />
+            <img src={logo} alt="<--X--X--X-->" className={styles.logo} />
           </div>
-          <h1 className="tittle-1">Inicio de sesion.</h1>
-          <form className="login-frame" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form__group">
+          <div className={styles.message_div}>
+            <h1 className={styles.tittle_1}>Inicio de sesion.</h1>
+            <p className={styles.message}>{message}</p>
+          </div>
+          <form
+            className={styles.login_frame}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className={styles.form__group}>
               <input
                 type="text"
-                className="form__field"
+                className={styles.form__field}
                 placeholder="Name"
                 name="username"
                 id="username"
@@ -34,35 +48,35 @@ function UserPage() {
                 {...register("usuario")}
                 required
               />
-              <label htmlFor="username" className="form__label">
+              <label htmlFor="username" className={styles.form__label}>
                 Usuario
               </label>
             </div>
-            <div className="form__group">
+            <div className={styles.form__group}>
               <input
                 type="password"
-                className="form__field"
+                className={styles.form__field}
                 placeholder="password"
                 name="password"
                 id="password"
                 {...register("password")}
                 required
               />
-              <label htmlFor="password" className="form__label">
+              <label htmlFor="password" className={styles.form__label}>
                 Contraseña
               </label>
-              <Link className="links">¿Olvidaste la contraseña?</Link>
+              <Link className={styles.links}>¿Olvidaste la contraseña?</Link>
             </div>
             <div></div>
-            <button className="boton-inicio" type="submit">
+            <button className={styles.boton_inicio} type="submit">
               Ingresar
             </button>
           </form>
         </div>
-        <div className="rframe2">
-          <div className="redireccion">
+        <div className={styles.rframe2}>
+          <div className={styles.redireccion}>
             <p>¿No tienes una cuenta? </p>
-            <Link to={"/sign_up"} className="links">
+            <Link to={"/sign_up"} className={styles.links}>
               Crea una cuenta.
             </Link>
           </div>

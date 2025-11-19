@@ -1,0 +1,126 @@
+.div_principal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  transform: translate(-50%, -50%);
+
+  border-radius: 12%;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 25%;
+  height: auto;
+}
+
+.header_tittle {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  background: #f8f9fa; 
+  border-bottom: 1px solid #ddd; 
+}
+
+.titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0; 
+}
+
+.cerrar {
+  background-color: rgb(158, 15, 15);
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.cerrar:hover {
+  background-color: rgb(139, 0, 0);
+  transform: scale(1.1);
+}
+
+.formulario {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  gap: 1.5rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+
+}
+
+.lavel_input {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.inputForm {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  background: #f8fafc;
+}
+
+.inputForm:focus {
+  outline: none;
+  border-color: #4299e1;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.botones {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end; 
+  margin-top: auto; 
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.botones button {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.botones button[type="submit"] {
+  background: #48bb78;
+  color: white;
+}
+
+.botones button[type="submit"]:hover {
+  background: #38a169;
+  transform: translateY(-2px);
+}
+
+.botones button[type="button"]{
+  background: #cbd5e0;
+  color: #2d3748;
+}
+
+.botones button[type="button"]:hover {
+  background: #a0aec0;
+}

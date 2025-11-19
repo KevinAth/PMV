@@ -9,6 +9,7 @@ import "./index.css";
 import Inventario from "./pages/Inventario.jsx";
 import Proveedores from "./pages/Proveedores.jsx";
 import Movimientos from "./pages/Movimientos.jsx";
+import UserProvider from "./context/UserContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </StrictMode>
 );

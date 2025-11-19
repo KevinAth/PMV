@@ -1,76 +1,93 @@
-import "../styles/login.module.css";
-import { Link } from "react-router";
+import styles from "../styles/login.module.css";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { registroUsuario } from "../routes/UserRoutes";
+import { useState } from "react";
 
 function RegisterUserPage() {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => registroUsuario(data);
+  const [message, SetMessage] = useState("  ");
 
+  const onSubmit = async (data) => {
+    try {
+      const response = await registroUsuario(data);
+      navigate("/sign_in");
+    } catch (error) {
+      SetMessage(error.response.data.message);
+    }
+  };
   return (
-    <div className="contenedor-principal">
-      <div className="contenedor-secundario">
-        <div className="rframe">
-          <h1 className="tittle-1">Crea Cuenta.</h1>
+    <div className={styles.contenedor_principal}>
+      <div className={styles.contenedor_secundario}>
+        <div className={styles.rframe}>
+          <div className={styles.message_div}>
+            <h1 className={styles.tittle_1}>Crea Cuenta.</h1>
+            <p className={styles.message}>{message || "\u00A0"}</p>
+          </div>
           <form
             action=""
-            className="login-frame"
+            className={styles.login_frame}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="form__group">
+            <div className={styles.form__group}>
               <input
                 type="text"
-                className="form__field"
+                className={styles.form__field}
                 name="username"
+                id="username"
                 placeholder="User"
                 autoComplete="off"
                 {...register("usuario")}
               />
-              <label htmlFor="username" className="form__label">
+              <label htmlFor="username" className={styles.form__label}>
                 Usuario
               </label>
             </div>
-            <div className="form__group">
+            <div className={styles.form__group}>
               <input
-                type="text"
-                className="form__field"
+                type="email"
+                className={styles.form__field}
                 name="Email"
+                id="Email"
                 placeholder="Email"
                 autoComplete="off"
                 {...register("email")}
               />
-              <label htmlFor="" className="form__label">
+              <label htmlFor="" className={styles.form__label}>
                 Correo electronico
               </label>
             </div>
-            <div className="form__group">
+            <div className={styles.form__group}>
               <input
                 type="password"
-                className="form__field"
+                className={styles.form__field}
                 name="password"
+                id="password"
                 placeholder="password"
                 {...register("password")}
               />
-              <label htmlFor="" className="form__label">
+              <label htmlFor="" className={styles.form__label}>
                 Contraseña
               </label>
             </div>
-            <div className="form__group">
+            <div className={styles.form__group}>
               <input
                 type="password"
-                className="form__field"
-                name="password"
-                placeholder="password"
+                className={styles.form__field}
+                name="password_val"
+                id="password_val"
+                placeholder="password_val"
                 {...register("password_val")}
               />
-              <label htmlFor="" className="form__label">
+              <label htmlFor="" className={styles.form__label}>
                 Repite contraseña
               </label>
             </div>
-            <button className="boton-inicio" type="submit">
+            <button className={styles.boton_inicio} type="submit">
               Registrar Usuario
             </button>
-            <Link to={"/sign_in"} className="links">
+            <Link to={"/sign_in"} className={styles.links}>
               Inicio de sesion
             </Link>
           </form>
