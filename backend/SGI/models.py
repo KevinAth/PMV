@@ -38,7 +38,7 @@ class Producto(models.Model):
     activo = models.BooleanField(default=True)
     date_add = models.DateField(auto_now_add=True)
     date_update = models.DateField(auto_created=True)
-    imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
+    ##imagen = models.ImageField(upload_to='productos/', blank=True, null=True)#-> no funciona, creo que para subir imagen tengo que crear en urls una ruta a archivos staticos pero creo que eso sobre llena los servidores, pero aja. toca ver.
 
     ##Tengo que añadir alguna forma de que la cantidad de productos traidas en un lote se sumen a la cantidad total de productos en Producto
     
