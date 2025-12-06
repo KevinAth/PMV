@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.png";
+import logo from "../../assets/Logo.png";
 import styles from "../../styles/sidebar.module.css";
 import { NavLink } from "react-router";
 

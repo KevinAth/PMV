@@ -35,7 +35,6 @@
   display: grid;
   align-items: center;
   grid-template-columns: 40px 0fr;
-
   transition: grid-template-columns 0.4s;
 }
 

@@ -2,11 +2,9 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  background-color: white;
   transform: translate(-50%, -50%);
-
+  background-color: #0f172b;
   border-radius: 12%;
-
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
   display: flex;
@@ -18,18 +16,25 @@
 }
 
 .header_tittle {
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center; 
-  background: #f8f9fa; 
-  border-bottom: 1px solid #ddd; 
+  align-items: center;  
+  border-bottom: 1px solid transparent;
+    border-image: linear-gradient(
+      to right,
+      #0f172b 5%,
+      #11998e 20%,
+      #38ef7d 90%,
+      #0f172b 95%
+    )
+    1;
 }
 
 .titulo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: white;
   margin: 0; 
 }
 
@@ -67,7 +72,7 @@
 
 .lavel_input {
   font-weight: 600;
-  color: #2d3748;
+  color: white;
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
@@ -107,20 +112,10 @@
 }
 
 .botones button[type="submit"] {
-  background: #48bb78;
+  background: #11998e;
   color: white;
 }
 
 .botones button[type="submit"]:hover {
-  background: #38a169;
-  transform: translateY(-2px);
-}
-
-.botones button[type="button"]{
-  background: #cbd5e0;
-  color: #2d3748;
-}
-
-.botones button[type="button"]:hover {
-  background: #a0aec0;
+  background: #38ef7d;
 }

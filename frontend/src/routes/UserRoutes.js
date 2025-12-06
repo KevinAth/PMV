@@ -14,4 +14,10 @@ export const VerificarUsuario = (token) =>
     },
   });
 
-export const CrearCat = (data) => axios.post(baseURL + "/crearcat/", data);
+export const CrearCat = (data, token) =>
+  axios.post(baseURL + "/crearcat/", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });

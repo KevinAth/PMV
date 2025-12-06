@@ -2,24 +2,24 @@ import { CrearCat } from "../../routes/UserRoutes";
 import styles from "../../styles/common/addForm.module.css";
 import { useForm } from "react-hook-form";
 
-export default function CatForm() {
+export default function CatForm({ Setopencat }) {
   const { register, handleSubmit } = useForm();
 
-  onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
-      const response = CrearCat(data)
-      alert(response.data.message)
+      const token = localStorage.getItem("access");
+      const response = await CrearCat(data, token);
+      alert(response.data.message);
+      Setopencat(false)
     } catch (error) {
-      alert(error.data.detail)
+      alert("error");
     }
-  }
-
-
+  };
   return (
     <div className={styles.div_principal}>
       <div className={styles.header_tittle}>
         <h3 className={styles.titulo}>Crear Categoria</h3>
-        <div className={styles.cerrar}>
+        <div className={styles.cerrar} onClick={() => Setopencat(false)}>
           <svg
             viewBox="-2.4 -2.4 28.80 28.80"
             fill="none"
@@ -51,7 +51,7 @@ export default function CatForm() {
       </div>
       <form className={styles.formulario} onSubmit={handleSubmit(onSubmit)}>
         <label className={styles.lavel_input}>Ingrese la Categoria</label>
-        <input className={styles.inputForm} {...register("nombre")}/>
+        <input className={styles.inputForm} {...register("nombre")} />
         <div className={styles.botones}>
           <button type="submit">Crear</button>
         </div>

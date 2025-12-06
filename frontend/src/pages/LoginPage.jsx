@@ -1,5 +1,5 @@
 import styles from "../styles/login.module.css";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { ValidarUsuario } from "../routes/UserRoutes";

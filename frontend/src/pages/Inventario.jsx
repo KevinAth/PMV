@@ -19,7 +19,7 @@ export default function Inventario() {
             <button className={styles.button_add} onClick={()=> Setopencat(true)}>
               Crear Categortia
             </button>
-            {opencat && <CatForm />}
+            {opencat && <CatForm Setopencat={Setopencat}/>}
           </div>
           <div>
             <button className={styles.button_add} onClick={()=> Setopenprod(true)}>

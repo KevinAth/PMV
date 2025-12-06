@@ -4,7 +4,7 @@ import { createBrowserRouter, redirect, RouterProvider } from "react-router";
 import App from "./App.jsx";
 import RegisterUserPage from "./pages/RegisterUserPage.jsx";
 import UserPage from "./pages/LoginPage.jsx";
-import Dashboard from "./pages/dashboard.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import "./index.css";
 import Inventario from "./pages/Inventario.jsx";
 import Proveedores from "./pages/Proveedores.jsx";
