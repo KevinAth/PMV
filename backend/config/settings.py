@@ -152,3 +152,8 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'SGI.Usuarios'
+
+import os 
+
+MEDIA = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')

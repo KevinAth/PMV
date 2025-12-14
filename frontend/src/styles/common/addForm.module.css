@@ -4,14 +4,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #0f172b;
-  border-radius: 12%;
+  border: 1px solid #1b2847;
+  border-radius: 0.9rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
   display: flex;
   justify-content: center;
   flex-direction: column;
 
-  width: 25%;
+  min-width: fit-content;
+  width: 10%;
   height: auto;
 }
 
@@ -19,9 +21,9 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;  
+  align-items: center;
   border-bottom: 1px solid transparent;
-    border-image: linear-gradient(
+  border-image: linear-gradient(
       to right,
       #0f172b 5%,
       #11998e 20%,
@@ -35,7 +37,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
-  margin: 0; 
+  margin: 0;
 }
 
 .cerrar {
@@ -62,12 +64,11 @@
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  height: 100%; 
+  height: 100%;
   gap: 1.5rem;
   border-radius: 12px;
   max-width: 600px;
   margin: 0 auto;
-
 }
 
 .lavel_input {
@@ -96,10 +97,9 @@
 .botones {
   display: flex;
   gap: 1rem;
-  justify-content: flex-end; 
-  margin-top: auto; 
+  justify-content: flex-end;
+  margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
 }
 
 .botones button {
@@ -118,4 +118,42 @@
 
 .botones button[type="submit"]:hover {
   background: #38ef7d;
+}
+
+.formulario_prod {
+  padding: 0.8rem;
+}
+
+.div_secundario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 630px){
+  .div_secundario{
+    grid-template-columns: 1fr;
+  }
+}
+
+.content_div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+select {
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 0.2rem .2rem;
+  background-color: white;
+}
+
+select:scope {
+  color: red;
+}
+
+textarea {
+   height: 7rem;
+   resize: none; 
 }

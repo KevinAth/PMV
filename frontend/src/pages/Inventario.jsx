@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Table_items from "../components/ui/Table_items";
 import styles from "../styles/inv.module.css";
 import CatForm from "../components/common/CatForm";
@@ -7,6 +7,26 @@ import ProductForm from "../components/common/ProductForm";
 export default function Inventario() {
   const [opencat, Setopencat] = useState(false);
   const [openprod, Setopenprod] = useState(false);
+  const ref_cat = useRef(null);
+  const ref_prod = useRef(null);
+
+  useEffect(() => {
+    function clickAfuera(e) {
+      if (opencat && ref_cat.current && !ref_cat.current.contains(e.target)) {
+        Setopencat(false);
+      }
+
+      if (
+        openprod &&
+        ref_prod.current &&
+        !ref_prod.current.contains(e.target)
+      ) {
+        Setopenprod(false);
+      }
+    }
+    document.addEventListener("mousedown", clickAfuera);
+    return () => document.removeEventListener("mousedown", clickAfuera);
+  }, [opencat, openprod]);
 
   return (
     <div className={styles.contenedor_principal}>
@@ -16,16 +36,24 @@ export default function Inventario() {
         </div>
         <div className={styles.addbuttons}>
           <div>
-            <button className={styles.button_add} onClick={()=> Setopencat(true)}>
-              Crear Categortia
+            <button
+              className={styles.button_add}
+              onClick={() => Setopencat(!opencat)}
+            >
+              Crear Categoria
             </button>
-            {opencat && <CatForm Setopencat={Setopencat}/>}
+            <div ref={ref_cat}>
+              {opencat && <CatForm Setopencat={Setopencat} />}
+            </div>
           </div>
           <div>
-            <button className={styles.button_add} onClick={()=> Setopenprod(true)}>
+            <button
+              className={styles.button_add}
+              onClick={() => Setopenprod(!openprod)}
+            >
               Crear Producto
             </button>
-            {openprod && <ProductForm />}
+            <div ref={ref_prod}>{openprod && <ProductForm  Setopenprod={Setopenprod}/>}</div>
           </div>
         </div>
       </div>

@@ -22,24 +22,22 @@ class Proveedores(models.Model):#-> creo que podria borrar algunos campo no tan 
             
 class Producto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField(blank=True, null=True)
     
-    catagoria = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, related_name='categorias')
+    categoria = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, related_name='categorias')
     proveedor =models.ForeignKey(Proveedores, on_delete=models.SET_NULL, null=True, related_name='proveedor')
     
-    precio_compra = models.DecimalField(max_digits=12,decimal_places=2,default=0)
     precio_venta = models.DecimalField(max_digits=12,decimal_places=2,default=0)
-    stock_total = models.IntegerField(default= 0)
     stock_minimo = models.IntegerField()    
     
     maneja_lote = models.BooleanField(default=False)
+    imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
     
     activo = models.BooleanField(default=True)
     date_add = models.DateField(auto_now_add=True)
-    date_update = models.DateField(auto_created=True)
-    ##imagen = models.ImageField(upload_to='productos/', blank=True, null=True)#-> no funciona, creo que para subir imagen tengo que crear en urls una ruta a archivos staticos pero creo que eso sobre llena los servidores, pero aja. toca ver.
-
+    date_update = models.DateField(auto_now=True)
     ##Tengo que añadir alguna forma de que la cantidad de productos traidas en un lote se sumen a la cantidad total de productos en Producto
     
 class Lote(models.Model):#-> Mejorar esta huevada
@@ -47,8 +45,8 @@ class Lote(models.Model):#-> Mejorar esta huevada
     numero_lote = models.CharField(max_length=50)
     fecha_vencimiento = models.DateField(null=True, blank=True)
     fecha_ingreso = models.DateField(auto_now_add=True)
-    cantidad_ingresada = models.DecimalField(max_digits=12, decimal_places=3)
-    cantidad_actual = models.DecimalField(max_digits=12, decimal_places=3)
+    cantidad_ingresada = models.IntegerField()
+    cantidad_actual = models.IntegerField()
     
 ## -> añadir la tabla para Guardar productos añadidos, parecido a un historial de entradas
 ## -> añadir una tabla para guardas los producto vendidos o que salieron del inventario, parecido a un historial de ventas

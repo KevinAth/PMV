@@ -5,12 +5,14 @@
   display: grid;
   grid-template-columns: 1fr auto;
 }
+
 .addbuttons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
+
 .button_add {
   color: white;
   background-color: #11998e;

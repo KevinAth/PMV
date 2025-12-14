@@ -21,3 +21,10 @@ export const CrearCat = (data, token) =>
       "Content-Type": "application/json",
     },
   });
+
+export const CrearProd = (data, token) =>
+  axios.post(baseURL + "/createprod/", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
