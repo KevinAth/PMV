@@ -82,7 +82,7 @@ def UserValidate(request):
             "username":user.username,
             "email":user.email}
     return Response({"status":"success","message":"Usuario verificado.","user":data}, status=status.HTTP_200_OK)
-
+# -> crear categoria
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def CrearCat(request):
@@ -90,6 +90,9 @@ def CrearCat(request):
     
     return Response ({"status":"success","message":"Categoria creada correctamente."}, status=status.HTTP_200_OK)
 
+# -> crear proveedor
+
+# -> crear productos
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def CrearProd(request):
@@ -118,9 +121,19 @@ def CrearProd(request):
                                 maneja_lote=lote,
                                 imagen=imagen
                                 )
-        print('Funciono, GOOD GOOD GOOD')
         return Response({'status':'success','message':'Producto creado correctamente'}, status=status.HTTP_200_OK)
     except Exception as e:
         print(str(e))
         return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
+# -> obtener variables
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def Get_variantes(request):
+    proveedores = (Proveedores.objects.values("id","nombre"))
+    categorias = (Categorias.objects.values("id","nombre"))
+
+
+    return Response({"proveedores":proveedores,"categorias":categorias},status=status.HTTP_200_OK)
+
+# Paginacion

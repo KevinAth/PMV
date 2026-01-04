@@ -53,7 +53,9 @@ export default function Inventario() {
             >
               Crear Producto
             </button>
-            <div ref={ref_prod}>{openprod && <ProductForm  Setopenprod={Setopenprod}/>}</div>
+            <div ref={ref_prod}>
+              {openprod && <ProductForm Setopenprod={Setopenprod} />}
+            </div>
           </div>
         </div>
       </div>

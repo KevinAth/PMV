@@ -17,20 +17,24 @@
   height: auto;
 }
 
+.cargando {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .header_tittle {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid transparent;
-  border-image: linear-gradient(
-      to right,
+  border-image: linear-gradient(to right,
       #0f172b 5%,
       #11998e 20%,
       #38ef7d 90%,
-      #0f172b 95%
-    )
-    1;
+      #0f172b 95%) 1;
 }
 
 .titulo {
@@ -130,8 +134,8 @@
   gap: 1rem;
 }
 
-@media (max-width: 630px){
-  .div_secundario{
+@media (max-width: 630px) {
+  .div_secundario {
     grid-template-columns: 1fr;
   }
 }
@@ -147,13 +151,15 @@ select {
   font-size: 1rem;
   padding: 0.2rem .2rem;
   background-color: white;
+  color: black;
 }
 
-select:scope {
-  color: red;
-}
 
 textarea {
-   height: 7rem;
-   resize: none; 
+  height: 7rem;
+  resize: none;
+}
+
+.select {
+  color: black;
 }

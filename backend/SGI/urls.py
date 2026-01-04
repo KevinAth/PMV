@@ -6,5 +6,6 @@ urlpatterns = [
     path('resgisteruser/',views.RegistrarUsuario, name='registrar_usuario'),
     path('uservalidate/',views.UserValidate, name='validar_usuario'),
     path("crearcat/", views.CrearCat, name="CrearCat"),
-    path("createprod/", views.CrearProd, name="CrearProd")
+    path("createprod/", views.CrearProd, name="CrearProd"),
+    path("obtenervar/",views.Get_variantes, name="GetVar"),
 ]

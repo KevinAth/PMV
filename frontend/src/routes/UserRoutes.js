@@ -28,3 +28,11 @@ export const CrearProd = (data, token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+export const GetVariables = (token) =>
+  axios.get(baseURL + "/obtenervar/", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
