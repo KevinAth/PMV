@@ -1,11 +1,11 @@
 from django.contrib.auth.hashers import make_password,check_password
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.decorators import api_view , permission_classes, parser_classes
+from rest_framework.decorators import api_view , permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Usuarios,Categorias,Producto,Proveedores
-
+from django.core.paginator import Paginator
 ## Registra Usuarios
 @api_view(['POST'])
 def RegistrarUsuario(request):
@@ -137,3 +137,22 @@ def Get_variantes(request):
     return Response({"proveedores":proveedores,"categorias":categorias},status=status.HTTP_200_OK)
 
 # Paginacion
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def ProdInvXPag(request):
+    numero_pagina = request.GET.get('page',1)
+
+    prodSet = Producto.objects.all()
+    pageNumber = 10
+    
+    paginador = Paginator(prodSet,pageNumber)
+    page_obj = paginador.get_page(numero_pagina)
+
+    return Response({
+        'result': page_obj,
+        'total_pages': paginador.num_pages,
+        'current_page': page_obj.number,
+        'has_next': page_obj.has_next(),
+        'has_previous' : page_obj.has_previous(),
+        'conunt': paginador.count
+    })

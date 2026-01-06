@@ -3,12 +3,21 @@ import Table_items from "../components/ui/Table_items";
 import styles from "../styles/inv.module.css";
 import CatForm from "../components/common/CatForm";
 import ProductForm from "../components/common/ProductForm";
+import { useParams, useSearchParams } from "react-router"
 
 export default function Inventario() {
   const [opencat, Setopencat] = useState(false);
   const [openprod, Setopenprod] = useState(false);
+
   const ref_cat = useRef(null);
   const ref_prod = useRef(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = 1
+  
+  useEffect(() => {
+    setSearchParams("?page=" + page)
+  }, [])
 
   useEffect(() => {
     function clickAfuera(e) {
