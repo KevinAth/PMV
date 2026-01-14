@@ -3,34 +3,55 @@ import Table_items from "../components/ui/Table_items";
 import styles from "../styles/inv.module.css";
 import CatForm from "../components/common/CatForm";
 import ProductForm from "../components/common/ProductForm";
+import { GetInventory } from "../routes/UserRoutes";
 import { useParams, useSearchParams } from "react-router"
 
 export default function Inventario() {
-  const [opencat, Setopencat] = useState(false);
-  const [openprod, Setopenprod] = useState(false);
+  const [opencat, setOpencat] = useState(false);
+  const [openprod, setOpenprod] = useState(false);
+  const [datos, setDatos] = useState()
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(searchParams.get("page") || 1)
+  console.log(page)
+
+  useEffect(() => {
+    const new_page = Number(searchParams.get("page")) || 1
+    setPage(new_page)
+  }, [searchParams])
+
+  const changePage = (newPage) => {
+    setSearchParams({ page: newPage })
+  }
+
+  useEffect(() => {
+    let token = localStorage.getItem("access")
+    const Getdata = async () => {
+      try {
+        const res = await GetInventory(token, page)
+        setDatos(res)
+        console.log(res)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    Getdata()
+  }, [searchParams])
 
   const ref_cat = useRef(null);
   const ref_prod = useRef(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = 1
-  
-  useEffect(() => {
-    setSearchParams("?page=" + page)
-  }, [])
-
+  // Cierre automatico de las ventanas al oprimir fuera de estas mismas.
   useEffect(() => {
     function clickAfuera(e) {
       if (opencat && ref_cat.current && !ref_cat.current.contains(e.target)) {
-        Setopencat(false);
+        setOpencat(false);
       }
-
       if (
         openprod &&
         ref_prod.current &&
         !ref_prod.current.contains(e.target)
       ) {
-        Setopenprod(false);
+        setOpenprod(false);
       }
     }
     document.addEventListener("mousedown", clickAfuera);
@@ -47,23 +68,23 @@ export default function Inventario() {
           <div>
             <button
               className={styles.button_add}
-              onClick={() => Setopencat(!opencat)}
+              onClick={() => setOpencat(!opencat)}
             >
               Crear Categoria
             </button>
             <div ref={ref_cat}>
-              {opencat && <CatForm Setopencat={Setopencat} />}
+              {opencat && <CatForm setOpencat={setOpencat} />}
             </div>
           </div>
           <div>
             <button
               className={styles.button_add}
-              onClick={() => Setopenprod(!openprod)}
+              onClick={() => setOpenprod(!openprod)}
             >
               Crear Producto
             </button>
             <div ref={ref_prod}>
-              {openprod && <ProductForm Setopenprod={Setopenprod} />}
+              {openprod && <ProductForm setOpenprod={setOpenprod} />}
             </div>
           </div>
         </div>
@@ -71,6 +92,9 @@ export default function Inventario() {
       <div className={styles.main_inv_filter}>
         <div className={styles.filters}></div>
         <div className={styles.inventary}>
+          {!datos ? <p>Cargando...</p> : datos.data.result.map((item) => (
+            <p>{item.nombre}</p>
+          ))}
           <Table_items />
         </div>
       </div>

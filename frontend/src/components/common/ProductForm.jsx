@@ -4,7 +4,7 @@ import { CrearProd, GetVariables } from "../../routes/UserRoutes";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-export default function ProductForm({ Setopenprod }) {
+export default function ProductForm({ setOpenprod }) {
   const { register, handleSubmit, control } = useForm();
 
   const [cat, setCat] = useState([]);
@@ -45,7 +45,7 @@ export default function ProductForm({ Setopenprod }) {
     } catch (error) {
       console.error(error);
     } finally {
-      Setopenprod(false)
+      setOpenprod(false)
     }
   };
   const booleanOptions = [{
@@ -75,7 +75,7 @@ export default function ProductForm({ Setopenprod }) {
     <div className={styles.div_principal}>
       <div className={styles.header_tittle}>
         <h3 className={styles.titulo}>Crear Producto</h3>
-        <div className={styles.cerrar} onClick={() => Setopenprod(false)}>
+        <div className={styles.cerrar} onClick={() => setOpenprod(false)}>
           <svg
             viewBox="-2.4 -2.4 28.80 28.80"
             fill="none"

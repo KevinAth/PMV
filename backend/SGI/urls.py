@@ -8,4 +8,5 @@ urlpatterns = [
     path("crearcat/", views.CrearCat, name="CrearCat"),
     path("createprod/", views.CrearProd, name="CrearProd"),
     path("obtenervar/",views.Get_variantes, name="GetVar"),
+    path("obtenerprodxpag/<int:page>/",views.ProdInvXPag, name="ProdInvXPag")
 ]

@@ -2,7 +2,7 @@ import { CrearCat } from "../../routes/UserRoutes";
 import styles from "../../styles/common/addForm.module.css";
 import { useForm } from "react-hook-form";
 
-export default function CatForm({ Setopencat }) {
+export default function CatForm({ setOpencat }) {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
@@ -19,7 +19,7 @@ export default function CatForm({ Setopencat }) {
     <div className={styles.div_principal}>
       <div className={styles.header_tittle}>
         <h3 className={styles.titulo}>Crear Categoria</h3>
-        <div className={styles.cerrar} onClick={() => Setopencat(false)}>
+        <div className={styles.cerrar} onClick={() => setOpencat(false)}>
           <svg
             viewBox="-2.4 -2.4 28.80 28.80"
             fill="none"

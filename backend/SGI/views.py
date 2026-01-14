@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Usuarios,Categorias,Producto,Proveedores
 from django.core.paginator import Paginator
+
 ## Registra Usuarios
 @api_view(['POST'])
 def RegistrarUsuario(request):
@@ -139,20 +140,24 @@ def Get_variantes(request):
 # Paginacion
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def ProdInvXPag(request):
-    numero_pagina = request.GET.get('page',1)
+def ProdInvXPag(request,page):
+    try:
+        prodSet = Producto.objects.all().values()
+        pageNumber = 5
+        
+        paginador = Paginator(prodSet,pageNumber)
+        page_obj = paginador.get_page(page)
 
-    prodSet = Producto.objects.all()
-    pageNumber = 10
+        print(page_obj)
+
+        return Response({
+            'result': list(page_obj),
+            'total_pages': paginador.num_pages,
+            'current_page': page_obj.number,
+            'has_next': page_obj.has_next(),
+            'has_previous' : page_obj.has_previous(),
+            'conunt': paginador.count
+        }, status=status.HTTP_200_OK)
     
-    paginador = Paginator(prodSet,pageNumber)
-    page_obj = paginador.get_page(numero_pagina)
-
-    return Response({
-        'result': page_obj,
-        'total_pages': paginador.num_pages,
-        'current_page': page_obj.number,
-        'has_next': page_obj.has_next(),
-        'has_previous' : page_obj.has_previous(),
-        'conunt': paginador.count
-    })
+    except Exception as e:
+        print(e)

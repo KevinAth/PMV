@@ -36,3 +36,12 @@ export const GetVariables = (token) =>
       "Content-Type": "application/json",
     },
   });
+
+// Obtener los productos del inventario con paginador
+
+export const GetInventory = (token,page) => axios.get(baseURL + `/obtenerprodxpag/${page}/` , {
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  },
+})
