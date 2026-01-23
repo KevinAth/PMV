@@ -30,12 +30,62 @@
 .button_add:hover {
   background-color: #38ef7d;
 }
+
 .main_inv_filter {
   margin-top: 2%;
   background-color: #020618bb;
   width: 100%;
-  height: 43rem;
+  height: 100%;
   border-radius: 1.5rem;
   padding: 2% 2%;
   border: 1px solid #08102e;
+}
+.inventario{
+  height: 100%;
+}
+.table_cont{
+  height: 100%;
+  width:100%;
+  padding: 1rem;
+  border-spacing: 0 10px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-collapse: separate;
+}
+.table_cont td {
+  text-align: center;
+}
+.item_table{
+  height: 4rem;
+}
+
+.tbody {
+  height: 100%;
+}
+.tbody tr{
+  background: #0f172b80;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+}
+.item_table:hover{
+  background-color: #0f172bf1;
+  cursor: pointer;
+}
+th:first-child {
+  border-radius: .5rem 0 0 .5rem;
+}
+
+td:last-child {
+  border-radius: 0 .5rem .5rem 0;
+}
+
+.links {
+  color: #11998e;
+  text-decoration: none;
+  margin: 5px;
+  justify-self: center;
+}
+
+.col_nombre{
+  text-align: center;
 }

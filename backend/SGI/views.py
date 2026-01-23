@@ -143,15 +143,21 @@ def Get_variantes(request):
 def ProdInvXPag(request,page):
     try:
         prodSet = Producto.objects.all().values()
-        pageNumber = 5
+        pageNumber = 10
         
         paginador = Paginator(prodSet,pageNumber)
         page_obj = paginador.get_page(page)
 
-        print(page_obj)
-
+        result = []
+        for item in page_obj:
+            categoria = Categorias.objects.get(id=item["categoria_id"])
+            proveedor = Proveedores.objects.get(id=item["proveedor_id"])
+            item["categoria"] = categoria.nombre
+            item["proveedor"] = proveedor.nombre
+            result.append(item)
+        
         return Response({
-            'result': list(page_obj),
+            'result': result,
             'total_pages': paginador.num_pages,
             'current_page': page_obj.number,
             'has_next': page_obj.has_next(),

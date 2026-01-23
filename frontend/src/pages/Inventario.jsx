@@ -5,6 +5,8 @@ import CatForm from "../components/common/CatForm";
 import ProductForm from "../components/common/ProductForm";
 import { GetInventory } from "../routes/UserRoutes";
 import { useParams, useSearchParams } from "react-router"
+import { Link } from "react-router"
+import Paginacion from "../components/common/Paginacion";
 
 export default function Inventario() {
   const [opencat, setOpencat] = useState(false);
@@ -90,12 +92,31 @@ export default function Inventario() {
         </div>
       </div>
       <div className={styles.main_inv_filter}>
-        <div className={styles.filters}></div>
-        <div className={styles.inventary}>
-          {!datos ? <p>Cargando...</p> : datos.data.result.map((item) => (
-            <p>{item.nombre}</p>
-          ))}
-          <Table_items />
+        <div className={styles.inventario}>
+          {!datos ? <p>Cargando...</p> : <>
+            <table className={styles.table_cont}>
+              <thead className={styles.thead}>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Proveedor</th>
+                  <th scope="col">¿Maneja Lotes?</th>
+                  <th scope="col">Precio por unidad</th>
+                </tr>
+              </thead>
+              <tbody className={styles.tbody}>
+                {datos.data.result.map((item) => (
+                  <Table_items item={item} key={item.id} />
+                ))}
+              </tbody>
+            </table>
+            <div>
+              <Paginacion changePage={changePage} page={page} max_page={datos.data.total_pages} next={datos.data.has_next} previous={datos.data.has_previous} />
+            </div>
+          </>
+          }
+          <div />
         </div>
       </div>
     </div>

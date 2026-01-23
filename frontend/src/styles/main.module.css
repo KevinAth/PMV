@@ -1,3 +1,9 @@
+html,
+body {
+  overflow: hidden;
+  min-height: 100vh;
+}
+
 .contenedor_main {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -5,10 +11,11 @@
 
 .contenedor_sidebar {
   display: flex;
-  align-items: center;
   height: 100%;
 }
 
-.contenido_principal{
+.contenido_principal {
   padding: .8rem;
+  overflow-y: auto;
+  height : 100vh;
 }
