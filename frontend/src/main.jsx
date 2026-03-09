@@ -9,7 +9,7 @@ import "./index.css";
 import Inventario from "./pages/Inventario.jsx";
 import Proveedores from "./pages/Proveedores.jsx";
 import Movimientos from "./pages/Movimientos.jsx";
-import UserProvider from "./context/UserContext.jsx";
+import ProductDetail from "./components/common/ProductDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,14 +45,16 @@ const router = createBrowserRouter([
         path: "movimientos",
         element: <Movimientos />,
       },
+      {
+        path: "details/:id",
+        element: <ProductDetail />
+      }
     ],
-  },
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
+    <RouterProvider router={router} />
   </StrictMode>
 );

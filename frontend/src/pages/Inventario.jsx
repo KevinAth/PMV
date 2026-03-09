@@ -14,7 +14,6 @@ export default function Inventario() {
   const [datos, setDatos] = useState()
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(searchParams.get("page") || 1)
-  console.log(page)
 
   useEffect(() => {
     const new_page = Number(searchParams.get("page")) || 1
@@ -25,17 +24,17 @@ export default function Inventario() {
     setSearchParams({ page: newPage })
   }
 
-  useEffect(() => {
-    let token = localStorage.getItem("access")
-    const Getdata = async () => {
-      try {
-        const res = await GetInventory(token, page)
-        setDatos(res)
-        console.log(res)
-      } catch (error) {
-        console.error(error)
-      }
+  const Getdata = async () => {
+    try {
+      let token = localStorage.getItem("access")
+      const res = await GetInventory(token, page)
+      setDatos(res)
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  useEffect(() => {
     Getdata()
   }, [searchParams])
 
@@ -86,7 +85,7 @@ export default function Inventario() {
               Crear Producto
             </button>
             <div ref={ref_prod}>
-              {openprod && <ProductForm setOpenprod={setOpenprod} />}
+              {openprod && <ProductForm setOpenprod={setOpenprod} Getdata={Getdata} />}
             </div>
           </div>
         </div>

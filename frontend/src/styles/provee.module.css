@@ -1,0 +1,67 @@
+.contenedor_principal_prov{
+    margin: 3rem;
+}
+.contenedor_label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.contenedor_label h2 {
+    color: white;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.contenedor_label button {
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #11998e;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.contenedor_label button:hover {
+    background-color: #38ef7d;
+}
+.grid_proveedores {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+.card_proveedor {
+    background-color: #0f172b;
+    border: 1px solid #1b2847;
+    border-radius: 12px;
+    padding: 1.2rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: all 0.3s;
+}
+.card_proveedor:hover {
+    border-color: #11998e;
+}
+
+.nombre_proveedor {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #38ef7d;
+    margin-bottom: .5rem;
+}
+
+.info_proveedor {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    word-break: break-word;
+}
+@media (max-width: 600px) {
+    .grid_proveedores {
+        grid-template-columns: 1fr;
+    }
+}

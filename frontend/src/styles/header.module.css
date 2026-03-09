@@ -6,6 +6,7 @@
 .search_icon {
   max-width: 25px;
 }
+
 .search_div {
   flex: 1;
   max-width: 50%;
@@ -16,14 +17,17 @@
   padding: 0.5rem;
   transition: all 0.2s ease;
 }
+
 .search_div input:focus,
 .search_div select:focus {
   border-color: #11998e;
 }
+
 .search_div:focus-within {
   border-color: #11998e;
   box-shadow: 0 0 0 0.2rem #11998ee1, 0 0.8rem 2.4rem rgba(0, 0, 0, 0.15);
 }
+
 .search_input {
   font-size: 1.2rem;
   width: 100%;
@@ -50,4 +54,55 @@
 
 .notification_logo {
   max-width: 2rem;
+}
+
+.notiContainer {
+  position: relative;
+}
+
+.notification {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.notification_logo {
+  width: 24px;
+}
+
+.notiPanel {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 260px;
+  max-height: 300px;
+
+  background-color: #0e1536;
+  border-radius: .8rem;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+
+  padding: 10px;
+  overflow-y: auto;
+  scrollbar-width: 1px;
+  
+  z-index: 1000;
+}
+
+.notiItem {
+  padding: 10px;
+  margin: .4rem;
+  border-radius: .8rem;
+  background-color: #030824;
+  border: 1px solid #040b2c;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.notiItem:hover {
+  background-color: #0f172bf1;
+}
+
+.empty {
+  text-align: center;
+  color: gray;
 }

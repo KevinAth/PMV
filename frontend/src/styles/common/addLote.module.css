@@ -1,0 +1,56 @@
+.lotediv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0f172b;
+    border: 1px solid #1b2847;
+    border-radius: 0.9rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: white;
+
+    padding: .8rem;
+}
+
+.titulo {
+    margin: 0;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.label {
+    font-size: .9rem;
+}
+
+.input {
+    padding: .3rem;
+    border-radius: 5px;
+    border: 1px solid #1b2847;
+}
+
+.botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    margin: .7rem;
+}
+
+.cancelar {
+    background: #1b2847;
+    color: white;
+    border: none;
+    padding: .3rem .8rem;
+    border-radius: 5px;
+}
+
+.agregar {
+    background: #11998e;
+    color: white;
+    border: none;
+    padding: .3rem .8rem;
+    border-radius: 5px;
+}

@@ -3,9 +3,7 @@ import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
-    <UserProvider>
-      <LoginPage />;
-    </UserProvider>
+    <LoginPage />
   );
 }
 

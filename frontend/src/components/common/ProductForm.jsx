@@ -4,7 +4,7 @@ import { CrearProd, GetVariables } from "../../routes/UserRoutes";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-export default function ProductForm({ setOpenprod }) {
+export default function ProductForm({ setOpenprod, Getdata }) {
   const { register, handleSubmit, control } = useForm();
 
   const [cat, setCat] = useState([]);
@@ -22,6 +22,7 @@ export default function ProductForm({ setOpenprod }) {
         console.error(error);
       } finally {
         setLoading(false);
+        Getdata()
       }
     };
     getDatos();
@@ -36,7 +37,6 @@ export default function ProductForm({ setOpenprod }) {
       formData.append("descripcion", data.descripcion);
       formData.append("categoria", data.categoria.value);
       formData.append("proveedor", data.proveedor.value);
-      formData.append("precio_venta", data.precio_venta);
       formData.append("stock_minimo", data.stock_minimo);
       formData.append("maneja_lote", data.maneja_lote);
       formData.append("imagen", data.imagen[0]);
@@ -161,13 +161,6 @@ export default function ProductForm({ setOpenprod }) {
             />
           </div>
           <div className={styles.content_div}>
-            <label>Precio de venta</label>
-            <input
-              type="number"
-              min={0}
-              className={styles.inputForm}
-              {...register("precio_venta")}
-            />
 
             <label>Stock mínimo</label>
             <input

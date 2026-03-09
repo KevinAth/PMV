@@ -1,26 +1,32 @@
 import { createContext, useEffect, useState } from "react";
-import { VerificarUsuario } from "../routes/UserRoutes";
+import { GetNoti, VerificarUsuario } from "../routes/UserRoutes";
 
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-  const [user, SetUser] = useState(null);
+  const [notis, setNotis] = useState([]);
+
+
+  const cargar = async () => {
+    const token = localStorage.getItem("access")
+    const res = await GetNoti(token)
+    setNotis(res.data.result)
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem("access");
-    
-    VerificarUsuario(token).then((res)=>{
-      SetUser(res.data.user)
-    })
-    
-  },[]);
+    cargar()
+    const interval = setInterval(async () => {
+      const token = localStorage.getItem("access")
+      const res = await GetNoti(token)
+      setNotis(res.data.result)
+    }, 20000)
 
-  useEffect(()=>{
-    console.log(user?.id)
-  },[user])
+    return () => clearInterval(interval)
+
+  }, [])
 
   return (
-    <UserContext.Provider value={{ user, SetUser }}>
+    <UserContext.Provider value={{ notis }}>
       {children}
     </UserContext.Provider>
   );

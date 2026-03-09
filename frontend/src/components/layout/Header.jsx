@@ -1,7 +1,16 @@
 import styles from "../../styles/header.module.css";
 import bell from "../../assets/bell.png";
+import { useState } from "react"
+import { useContext } from "react"
+import { UserContext } from "../../context/UserContext"
+import { useNavigate } from "react-router"
+
 
 export default function Header() {
+  const [openNoti, setOpenNoti] = useState(false)
+  const { notis } = useContext(UserContext)
+  let navigate = useNavigate()
+
   return (
     <>
       <div className={styles.main_search_div}>
@@ -35,8 +44,29 @@ export default function Header() {
             placeholder="Buscar..."
           />
         </div>
-        <div className={styles.notification}>
-          <img src={bell} className={styles.notification_logo} />
+        <div>
+          <div className={styles.notiContainer}>
+            <div >
+              <button className={styles.notification} onClick={() => openNoti ? setOpenNoti(false) : setOpenNoti(true)}>
+                <img src={bell} className={styles.notification_logo} />
+              </button>
+            </div>
+            <div>
+              {openNoti && (
+                <div className={styles.notiPanel}>
+
+                  {notis.length === 0 && (
+                    <p>No hay notificaciones</p>
+                  )}
+                  {notis.map((n, i) => (
+                    <div key={i} className={styles.notiItem} onClick={() => navigate(`details/${n.id}`)}>
+                      {n.mensaje}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -37,11 +37,46 @@ export const GetVariables = (token) =>
     },
   });
 
-// Obtener los productos del inventario con paginador
-
-export const GetInventory = (token,page) => axios.get(baseURL + `/obtenerprodxpag/${page}/` , {
+export const GetInventory = (token, page) => axios.get(baseURL + `/obtenerprodxpag/${page}/`, {
   headers: {
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
   },
+})
+
+export const GetProductXid = (token, id) => axios.get(baseURL + `/getprodxid/${id}/`, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  },
+})
+
+export const AddLoteres = (data, token, id) => axios.post(baseURL + `/addlote/${id}/`, data, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
+
+export const GetLotes = (token, id) => axios.get(baseURL + `/addlotes/${id}/`, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  }
+})
+
+export const AddProvers = (token, data) => axios.post(baseURL + "/addprov/", data, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const GetProvers = (token) => axios.get(baseURL + "/getprov/", {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const GetNoti = (token) => axios.get(baseURL + "/getnoti/",{
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
 })

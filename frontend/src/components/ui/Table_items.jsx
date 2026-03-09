@@ -12,7 +12,7 @@ export default function Table_items({ item }) {
     return descripcion.length > 30 ? descripcion.slice(0, 25) + "..." : descripcion
   }
 
-  return <tr className={styles.item_table} onClick={() => navigate("/")}>
+  return <tr className={styles.item_table} onClick={() => navigate(`/panel_inicio/details/${item.id}`)}>
     <th scope="row" className={styles.col_nombre}>{item.nombre}</th>
     <td className={styles.col_descripcion}>{Recorte(item.descripcion)}</td>
     <td>{item.categoria}</td>

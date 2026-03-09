@@ -8,5 +8,11 @@ urlpatterns = [
     path("crearcat/", views.CrearCat, name="CrearCat"),
     path("createprod/", views.CrearProd, name="CrearProd"),
     path("obtenervar/",views.Get_variantes, name="GetVar"),
-    path("obtenerprodxpag/<int:page>/",views.ProdInvXPag, name="ProdInvXPag")
+    path("obtenerprodxpag/<int:page>/",views.ProdInvXPag, name="ProdInvXPag"),
+    path("getprodxid/<str:id>/",views.Get_productoXid, name="ProdDelXId"),
+    path("addlote/<str:id>/",views.AddLote, name="addloteret"),
+    path("addlotes/<str:id>/",views.GetLotes, name="getlotes"),
+    path("addprov/",views.AddProv, name="addprov"),
+    path("getprov/",views.GetProv, name="getprov"),
+    path("getnoti/",views.GetNoti, name="getnoti")
 ]
