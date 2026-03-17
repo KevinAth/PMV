@@ -40,7 +40,6 @@ export default function ProductForm({ setOpenprod, Getdata }) {
       formData.append("stock_minimo", data.stock_minimo);
       formData.append("maneja_lote", data.maneja_lote);
       formData.append("imagen", data.imagen[0]);
-
       const response = await CrearProd(formData, token);
     } catch (error) {
       console.error(error);

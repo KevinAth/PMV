@@ -36,7 +36,7 @@ export default function Inventario() {
 
   useEffect(() => {
     Getdata()
-  }, [searchParams])
+  }, [searchParams, openprod])
 
   const ref_cat = useRef(null);
   const ref_prod = useRef(null);
@@ -92,7 +92,7 @@ export default function Inventario() {
       </div>
       <div className={styles.main_inv_filter}>
         <div className={styles.inventario}>
-          {!datos ? <p>Cargando...</p> : <>
+          {!datos ? <p>No hay productos disponibles.</p> : <>
             <table className={styles.table_cont}>
               <thead className={styles.thead}>
                 <tr>

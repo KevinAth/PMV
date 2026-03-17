@@ -14,5 +14,10 @@ urlpatterns = [
     path("addlotes/<str:id>/",views.GetLotes, name="getlotes"),
     path("addprov/",views.AddProv, name="addprov"),
     path("getprov/",views.GetProv, name="getprov"),
-    path("getnoti/",views.GetNoti, name="getnoti")
+    path("getnoti/",views.GetNoti, name="getnoti"),
+    path("eliprod/<str:id>/",views.Delete_prod, name="deleteprod"),
+    path("modprod/<str:id>/",views.Modiprod, name="modiprod"),
+    path("elilote/<str:id>/",views.Delete_lote, name="elilote"),
+    path("modprov/<str:id>/",views.ModiProvs, name="modprovs"),
+    path("eliproves/<str:id>/",views.Delete_proves, name="eliproves")
 ]

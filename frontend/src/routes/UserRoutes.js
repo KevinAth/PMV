@@ -75,7 +75,37 @@ export const GetProvers = (token) => axios.get(baseURL + "/getprov/", {
   }
 })
 
-export const GetNoti = (token) => axios.get(baseURL + "/getnoti/",{
+export const GetNoti = (token) => axios.get(baseURL + "/getnoti/", {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const DeleteProd = (token, id) => axios.delete(baseURL + `/eliprod/${id}/`, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const ModiProd = (token, id, data) => axios.put(baseURL + `/modprod/${id}/`, data, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const DeleteLote = (token, id) => axios.delete(baseURL + `/elilote/${id}/`, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const ModiProvs = (token, id, data) => axios.put(baseURL + `/modprov/${id}/`, data, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
+export const DeleteProves = (token, id) => axios.delete(baseURL + `/eliproves/${id}/`, {
   headers: {
     Authorization: `Bearer ${token}`
   }

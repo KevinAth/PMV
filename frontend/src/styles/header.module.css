@@ -50,6 +50,10 @@
 
   background-color: white;
   border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  gap: 2rem;
 }
 
 .notification_logo {
@@ -57,14 +61,11 @@
 }
 
 .notiContainer {
+  display: flex;
   position: relative;
+  gap: 1rem;
 }
 
-.notification {
-  background-color: white;
-  border: none;
-  cursor: pointer;
-}
 
 .notification_logo {
   width: 24px;
@@ -84,7 +85,7 @@
   padding: 10px;
   overflow-y: auto;
   scrollbar-width: 1px;
-  
+
   z-index: 1000;
 }
 

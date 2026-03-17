@@ -1,6 +1,7 @@
-.contenedor_principal_prov{
+.contenedor_principal_prov {
     margin: 3rem;
 }
+
 .contenedor_label {
     display: flex;
     justify-content: space-between;
@@ -28,11 +29,13 @@
 .contenedor_label button:hover {
     background-color: #38ef7d;
 }
+
 .grid_proveedores {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.5rem;
 }
+
 .card_proveedor {
     background-color: #0f172b;
     border: 1px solid #1b2847;
@@ -44,8 +47,108 @@
     gap: 0.4rem;
     transition: all 0.3s;
 }
+
 .card_proveedor:hover {
     border-color: #11998e;
+}
+
+.prov_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prov_wrapper img {
+    max-width: 2rem;
+}
+
+.optprov_cont {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+
+}
+
+.optprov_cont div {
+    display: flex;
+    border-radius: 15%;
+    padding: .2rem;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ediprov {
+    background-color: rgb(48, 121, 204);
+}
+
+.eliprov {
+    background-color: rgb(194, 39, 39);
+}
+
+.ediprov:hover {
+    background-color: rgb(31, 78, 133);
+    transition: all 0.2s;
+}
+
+.eliprov:hover {
+    background-color: rgb(124, 25, 25);
+    transition: all 0.2s;
+}
+
+.wrapper_elinoti {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0f172b;
+    border: 1px solid #1b2847;
+    border-radius: 0.9rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    padding: 1.5rem;
+    min-width: fit-content;
+    width: 10%;
+    height: auto;
+    color: white;
+}
+
+.boton_div {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton_div button {
+    color: white;
+    padding: 0.6rem 1.8rem;
+    border: none;
+    border-radius: .8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.boton_no {
+    background-color: #23325a;
+}
+
+.boton_si {
+    background-color: #ad4848;
+}
+
+.boton_no:hover {
+    background-color: #161f38;
+}
+
+.boton_si:hover {
+    background-color: #662b2b;
 }
 
 .nombre_proveedor {
@@ -60,6 +163,7 @@
     color: #cbd5e1;
     word-break: break-word;
 }
+
 @media (max-width: 600px) {
     .grid_proveedores {
         grid-template-columns: 1fr;

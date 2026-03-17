@@ -28,8 +28,42 @@
 
 .img_wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: #111827;
+}
+
+.button_wrapper {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.button_wrapper button {
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    cursor: pointer;
+    padding: .8rem;
+    border: 0px;
+    border-radius: .5rem;
+    transition: all 0.3s;
+}
+
+.elimincar_boton {
+    background-color: #ad4848;
+}
+
+.modificar_boton {
+    background-color: rgb(66, 128, 243);
+}
+
+.elimincar_boton:hover {
+    background-color: #7e3434;
+}
+
+.modificar_boton:hover {
+    background-color: rgb(39, 74, 139);
 }
 
 .img {
@@ -169,16 +203,6 @@
     color: #16a34a;
 }
 
-.cantidad_disponible {
-    font-weight: 600;
-    color: #2563eb;
-}
-
-.cantidad_agotada {
-    font-weight: 600;
-    color: #dc2626;
-}
-
 @media (max-width: 768px) {
     .info_producto {
         grid-template-columns: 1fr;
@@ -225,4 +249,58 @@
 
 .botonSubmit:hover {
     background-color: #1b5e20;
+}
+
+.wrapper_elinoti {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0f172b;
+    border: 1px solid #1b2847;
+    border-radius: 0.9rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    padding: 1.5rem;
+    min-width: fit-content;
+    width: 10%;
+    height: auto;
+    color: white;
+}
+
+.boton_div {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton_div button {
+    color: white;
+    padding: 0.6rem 1.8rem;
+    border: none;
+    border-radius: .8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.boton_no {
+    background-color: #23325a;
+}
+
+.boton_si {
+    background-color: #ad4848;
+}
+
+.boton_no:hover {
+    background-color: #161f38;
+}
+
+.boton_si:hover {
+    background-color: #662b2b;
 }

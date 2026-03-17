@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view , permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Usuarios,Categorias,Producto,Proveedores,Lote,Notificacion
+from .models import Usuarios,Categorias,Producto,Proveedores,Lote
 from django.core.paginator import Paginator
 from django.db.models import F
 
@@ -92,8 +92,6 @@ def CrearCat(request):
     
     return Response ({"status":"success","message":"Categoria creada correctamente."}, status=status.HTTP_200_OK)
 
-# -> crear proveedor
-
 # -> crear productos
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
@@ -105,6 +103,7 @@ def CrearProd(request):
             return Response ({'status':'error','message':'Datos incompletos'}, status=status.HTTP_400_BAD_REQUEST)
         
         cate = Categorias.objects.get(id=datos.get("categoria"))
+        print("Proveedor recibido:", datos.get("proveedor"))
         prove = Proveedores.objects.get(id=datos.get("proveedor"))
 
         imagen = request.FILES.get("imagen")
@@ -128,6 +127,49 @@ def CrearProd(request):
         print(str(e)),
         return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def Modiprod(request,id):
+    try:
+        datos = request.data
+        prod = Producto.objects.get(id=id,usuario=request.user)
+
+        cate = Categorias.objects.get(id=datos.get("categoria"))
+        prove = Proveedores.objects.get(id=datos.get("proveedor"))
+        if datos.get("maneja_lote") == "false":
+            lote = False
+        else:
+            lote = True
+        imagen = request.FILES.get("imagen")
+
+        prod.nombre = datos.get("nombre")
+        prod.descripcion=datos.get("descripcion")
+        prod.categoria=cate
+        prod.proveedor=prove
+        prod.stock_minimo=datos.get('stock_minimo')
+        prod.maneja_lote=lote
+        prod.imagen=imagen
+
+        prod.save()
+
+        return Response({'status':'success','message':'Producto modificado correctamente.'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(str(e))
+        return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def Delete_prod(request,id):
+    try:
+        res = Producto.objects.get(id=id,usuario=request.user.id)
+        res.delete()
+        return Response({'status':'success','message':'Producto eliminado correctamente.'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    
 # -> obtener variables
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -154,7 +196,7 @@ def Get_productoXid(request,id):
 @permission_classes([IsAuthenticated])
 def ProdInvXPag(request,page):
     try:
-        prodSet = Producto.objects.filter(usuario=request.user.id).values()
+        prodSet = Producto.objects.filter(usuario=request.user).select_related("categoria", "proveedor")
         pageNumber = 10
         
         paginador = Paginator(prodSet,pageNumber)
@@ -162,11 +204,16 @@ def ProdInvXPag(request,page):
 
         result = []
         for item in page_obj:
-            categoria = Categorias.objects.get(id=item["categoria_id"])
-            proveedor = Proveedores.objects.get(id=item["proveedor_id"])
-            item["categoria"] = categoria.nombre
-            item["proveedor"] = proveedor.nombre
-            result.append(item)
+            result.append({
+                "id": item.id,
+                "nombre": item.nombre,
+                "descripcion": item.descripcion,
+                "categoria": item.categoria.nombre if item.categoria else None,
+                "proveedor": item.proveedor.nombre if item.proveedor else None,
+                "stock_minimo": item.stock_minimo,
+                "maneja_lote": item.maneja_lote,
+                "imagen": item.imagen.url if item.imagen else None
+            })
         
         return Response({
             'result': result,
@@ -179,6 +226,7 @@ def ProdInvXPag(request,page):
     
     except Exception as e:
         print(e)
+        return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # agregar lotes de productos
 @api_view(["POST"])
@@ -188,9 +236,13 @@ def AddLote(request,id):
         datos = request.data
         producto = Producto.objects.get(id=id)
         Lote.objects.create(producto=producto,precio_lote=datos["precio_lote"],fecha_vencimiento=datos["vencimiento_lote"],cantidad_ingresada=datos["cantidad_lote"],cantidad_actual=datos["cantidad_lote"])
+        return Response({'status':'success','message':'Lote eliminado correctamente.'}, status=status.HTTP_200_OK)
     except Exception as e :
         print(e)
-    return Response("ZHI")
+        return Response({'status':'error',
+                         'message':'Error interno del servidor',
+                         'details':str(e)},
+                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Obtener todos los lotes de un producto
 @api_view(["GET"])
@@ -198,6 +250,18 @@ def AddLote(request,id):
 def GetLotes(request,id):
     lotes = Lote.objects.filter(producto=id).values()
     return Response({"status":'succes',"message":"Producto cargado correctamente.",'result':list(lotes)}, status=status.HTTP_200_OK)
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def Delete_lote(request,id):
+    try:
+        res = Lote.objects.get(id=id)
+        res.delete()
+        res.refresh()
+        return Response({'status':'success','message':'Lote eliminado correctamente.'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # agregar Proveedores
 @api_view(["POST"])
@@ -223,6 +287,41 @@ def AddProv(request):
             "message" : "Error interno del servidor.",
             "detail" : str(e)
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def ModiProvs(request,id):
+    try:
+        data = request.data
+        proves = Proveedores.objects.get(id=id,usuario=request.user)
+
+        proves.nombre=data.get("nombre")
+        proves.acerca= data.get("acerca")
+        proves.telefono = data.get("telefono")
+        proves.direccion = data.get("direccion")
+        proves.email= data.get("email")
+
+        proves.save()
+        
+        return Response({'status':'success','message':'Proveedor modificado correctamente.'}, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response({
+            "status":"error",
+            "message" : "Error interno del servidor.",
+            "detail" : str(e)
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def Delete_proves(request,id):
+    try:
+        res = Proveedores.objects.get(id=id,usuario=request.user.id)
+        res.delete()
+        return Response({'status':'success','message':'Proveedor eliminado correctamente.'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response({'status':'error','message':'Error interno del servidor','details':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -256,7 +355,6 @@ def GetNoti(request):
         vencidos = Lote.objects.filter(fecha_vencimiento__lte=hoy).values()
         xvencer = Lote.objects.filter(fecha_vencimiento__lte=limite,fecha_vencimiento__gt=hoy).values()
 
-
         for i in stock_menos:
             data.append({
                 "mensaje": f"El stock({i['stock_actual']}) del producto {i['nombre']} esta por debajo del stock minimo({i['stock_minimo']}).",
@@ -264,14 +362,12 @@ def GetNoti(request):
                 "id":i["id"]
             })
 
-
         for z in stock_agotado:
             data.append({
                 "mensaje": f"El producto {z['nombre']} no tiene existencias.",
                 "tipo":"agotado",
                 "id":z["id"]
             })
-
 
         for x in vencidos:
             xprod = Producto.objects.get(id=x["producto_id"])
@@ -281,7 +377,6 @@ def GetNoti(request):
                 "tipo":"vencido",
                 "id":x["producto_id"]
             })
-
 
         for y in xvencer:
             yprod = Producto.objects.get(id=y["producto_id"])

@@ -38,6 +38,7 @@ class Producto(models.Model):
     categoria = models.ForeignKey(Categorias, on_delete=models.SET_NULL, null=True, related_name='categorias')
     proveedor =models.ForeignKey(Proveedores, on_delete=models.SET_NULL, null=True, related_name='proveedor')
     
+    precio_compra = models.DecimalField(max_digits=12,decimal_places=2,default=0)
     precio_venta = models.DecimalField(max_digits=12,decimal_places=2,default=0)
     stock_minimo = models.IntegerField()
     stock_actual = models.IntegerField(default=0)    
@@ -53,30 +54,26 @@ class Producto(models.Model):
     def Calcularprecio(self):
         lotes = self.lotes.filter(cantidad_actual__gt=0)
 
-        total_cantidad = lotes.aggregate(
-            total_valor = Sum("cantidad_actual")
+        total = lotes.aggregate(
+            total_cantidad=Sum("cantidad_actual"),
+            total_valor=Sum("precio_lote")
         )
-        print(total_cantidad["total_valor"])
-        total_precio = lotes.aggregate(
-            total_valor=Sum(
-                ExpressionWrapper(
-                    F("precio_lote") * F("cantidad_actual"),
-                    output_field=DecimalField()
-                )
-            ),
-            total_cantidad=Sum("cantidad_actual")
-        )
-        print(total_precio["total_valor"])
-        if total_cantidad["total_valor"]:
-            self.stock_actual = total_cantidad["total_valor"]
-        else:
-            self.stock_actual = 0
-        if total_precio["total_cantidad"]:
-            self.precio_venta = total_precio["total_valor"] / total_cantidad["total_valor"]
+
+        total_cantidad = total["total_cantidad"] or 0
+        total_valor = total["total_valor"] or 0
+            
+        self.stock_actual = total_cantidad
+
+        if total_cantidad > 0:
+            precioUnitario = total_valor / total_cantidad
+            precioVenta = float(precioUnitario) * 1.25
+            self.precio_venta = precioVenta
+            self.precio_compra = precioUnitario
         else:
             self.precio_venta = 0
+            self.precio_compra = 0
         
-        self.save(update_fields=["precio_venta","stock_actual"])
+        self.save(update_fields=["precio_venta","precio_compra","stock_actual"])
     
 class Lote(models.Model):#-> Mejorar esta huevada
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='lotes')
@@ -89,16 +86,5 @@ class Lote(models.Model):#-> Mejorar esta huevada
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs) 
         self.producto.Calcularprecio()
-
-class Notificacion(models.Model):
-    usuario = models.ForeignKey(Usuarios, on_delete=models.CASCADE, related_name='notificaciones')
-    
-    mensaje = models.CharField(max_length=255)
-    tipo = models.CharField(max_length=50)
-    leida = models.BooleanField(default=False)
-    fecha = models.DateField(auto_now_add=True)
-
-
-## -> añadir la tabla para Guardar productos añadidos, parecido a un historial de entradas
-## -> añadir una tabla para guardas los producto vendidos o que salieron del inventario, parecido a un historial de ventas
-    
+    def refresh(self):
+        self.producto.Calcularprecio()

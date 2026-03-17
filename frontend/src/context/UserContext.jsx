@@ -19,7 +19,7 @@ export default function UserProvider({ children }) {
       const token = localStorage.getItem("access")
       const res = await GetNoti(token)
       setNotis(res.data.result)
-    }, 20000)
+    }, 10000)
 
     return () => clearInterval(interval)
 
