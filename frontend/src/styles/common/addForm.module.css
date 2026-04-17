@@ -1,5 +1,6 @@
 .div_principal {
   position: fixed;
+  z-index: 9999;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -16,6 +17,8 @@
   width: 10%;
   height: auto;
   color: white;
+
+
 }
 
 .cargando {

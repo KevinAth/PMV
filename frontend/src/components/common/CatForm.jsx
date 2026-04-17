@@ -9,12 +9,11 @@ export default function CatForm({ setOpencat }) {
     try {
       const token = localStorage.getItem("access");
       const response = await CrearCat(data, token);
-      alert(response.data.message);
-      Setopencat(false)
-    } catch (error) {
-      alert("error");
+    } finally {
+      setOpencat(false)
     }
   };
+  
   return (
     <div className={styles.div_principal}>
       <div className={styles.header_tittle}>

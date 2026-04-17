@@ -1,7 +1,6 @@
 import styles from "../../styles/header.module.css";
 import bell from "../../assets/bell.png";
-import { useState } from "react"
-import { useContext } from "react"
+import { useContext, useState, useRef, useEffect } from "react"
 import { UserContext } from "../../context/UserContext"
 import { useNavigate } from "react-router"
 
@@ -11,6 +10,17 @@ export default function Header() {
   const { notis } = useContext(UserContext)
   let navigate = useNavigate()
 
+  const ref_noti = useRef(null);
+
+  useEffect(() => {
+    function clickAfuera(e) {
+      if (openNoti && ref_noti.current && !ref_noti.current.contains(e.target)) {
+        setOpenNoti(false);
+      }
+    }
+    document.addEventListener("mousedown", clickAfuera);
+    return () => document.removeEventListener("mousedown", clickAfuera);
+  }, [openNoti]);
   return (
     <>
       <div className={styles.main_search_div}>
@@ -51,7 +61,7 @@ export default function Header() {
                 <img src={bell} className={styles.notification_logo} />
               </button>
             </div>
-            <div>
+            <div ref={ref_noti}>
               {openNoti && (
                 <div className={styles.notiPanel}>
 

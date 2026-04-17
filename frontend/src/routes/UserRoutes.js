@@ -37,12 +37,16 @@ export const GetVariables = (token) =>
     },
   });
 
-export const GetInventory = (token, page) => axios.get(baseURL + `/obtenerprodxpag/${page}/`, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  },
-})
+export const GetInventory = (token, page, params = "") =>
+  axios.get(
+    baseURL + `/obtenerprodxpag/${page}/` + (params ? `?${params}` : ""),
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
 export const GetProductXid = (token, id) => axios.get(baseURL + `/getprodxid/${id}/`, {
   headers: {

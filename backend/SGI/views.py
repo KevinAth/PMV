@@ -174,8 +174,10 @@ def Delete_prod(request,id):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def Get_variantes(request):
-    proveedores = (Proveedores.objects.values("id","nombre"))
-    categorias = (Categorias.objects.values("id","nombre"))
+    res_prov = Proveedores.objects.filter(usuario=request.user.id)
+    res_cat = Categorias.objects.filter(usuario=request.user.id)
+    proveedores = (res_prov.values("id","nombre"))
+    categorias = (res_cat.values("id","nombre"))
     return Response({"proveedores":proveedores,"categorias":categorias},status=status.HTTP_200_OK)
 
 # Obtener producto por id
@@ -197,6 +199,37 @@ def Get_productoXid(request,id):
 def ProdInvXPag(request,page):
     try:
         prodSet = Producto.objects.filter(usuario=request.user).select_related("categoria", "proveedor")
+
+        categoria = request.GET.get("categoria")
+        proveedor = request.GET.get("proveedor")
+        precio_min = request.GET.get("precio_min")
+        precio_max = request.GET.get("precio_max")
+        stock_min = request.GET.get("stock_min")
+        stock_max = request.GET.get("stock_max")
+
+        if categoria:
+            prodSet = prodSet.filter(categoria_id=categoria)
+
+        if proveedor:
+            prodSet = prodSet.filter(proveedor_id=proveedor)
+
+        if precio_min:
+            prodSet = prodSet.filter(precio_venta__gte=float(precio_min))
+
+        if precio_max:
+            prodSet = prodSet.filter(precio_venta__lte=float(precio_max))
+
+        if stock_min:
+            prodSet = prodSet.filter(stock_actual__gte=int(stock_min))
+
+        if stock_max:
+            prodSet = prodSet.filter(stock_actual__lte=int(stock_max))
+
+        pageNumber = 10
+        paginador = Paginator(prodSet, pageNumber)
+        page_obj = paginador.get_page(page)
+
+
         pageNumber = 10
         
         paginador = Paginator(prodSet,pageNumber)
@@ -211,7 +244,8 @@ def ProdInvXPag(request,page):
                 "categoria": item.categoria.nombre if item.categoria else None,
                 "proveedor": item.proveedor.nombre if item.proveedor else None,
                 "stock_minimo": item.stock_minimo,
-                "maneja_lote": item.maneja_lote,
+                "stock_actual": item.stock_actual,
+                "precio_venta": item.precio_venta,
                 "imagen": item.imagen.url if item.imagen else None
             })
         
@@ -235,7 +269,7 @@ def AddLote(request,id):
     try:
         datos = request.data
         producto = Producto.objects.get(id=id)
-        Lote.objects.create(producto=producto,precio_lote=datos["precio_lote"],fecha_vencimiento=datos["vencimiento_lote"],cantidad_ingresada=datos["cantidad_lote"],cantidad_actual=datos["cantidad_lote"])
+        Lote.objects.create(usuario=request.user,producto=producto,precio_lote=datos["precio_lote"],fecha_vencimiento=datos["vencimiento_lote"],cantidad_ingresada=datos["cantidad_lote"],cantidad_actual=datos["cantidad_lote"])
         return Response({'status':'success','message':'Lote eliminado correctamente.'}, status=status.HTTP_200_OK)
     except Exception as e :
         print(e)
@@ -349,11 +383,11 @@ def GetNoti(request):
         hoy = timezone.now().date()
         limite = hoy + timedelta(days=7)
 
-        stock_menos = Producto.objects.filter(stock_actual__lte=F("stock_minimo"),stock_actual__gt=0).values()
-        stock_agotado = Producto.objects.filter(stock_actual=0).values()
+        stock_menos = Producto.objects.filter(stock_actual__lte=F("stock_minimo"),stock_actual__gt=0,usuario=request.user.id).values()
+        stock_agotado = Producto.objects.filter(stock_actual=0,usuario=request.user.id).values()
         
-        vencidos = Lote.objects.filter(fecha_vencimiento__lte=hoy).values()
-        xvencer = Lote.objects.filter(fecha_vencimiento__lte=limite,fecha_vencimiento__gt=hoy).values()
+        vencidos = Lote.objects.filter(fecha_vencimiento__lte=hoy,usuario=request.user.id).values()
+        xvencer = Lote.objects.filter(fecha_vencimiento__lte=limite,fecha_vencimiento__gt=hoy,usuario=request.user.id).values()
 
         for i in stock_menos:
             data.append({

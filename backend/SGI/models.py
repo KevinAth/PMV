@@ -76,6 +76,8 @@ class Producto(models.Model):
         self.save(update_fields=["precio_venta","precio_compra","stock_actual"])
     
 class Lote(models.Model):#-> Mejorar esta huevada
+    usuario=models.ForeignKey(Usuarios, on_delete=models.CASCADE ,related_name="lotes")
+
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='lotes')
     precio_lote=models.DecimalField(max_digits=12,decimal_places=2,default=0)
     fecha_vencimiento = models.DateField(null=True, blank=True)

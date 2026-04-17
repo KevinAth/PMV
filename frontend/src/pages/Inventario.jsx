@@ -7,6 +7,7 @@ import { GetInventory } from "../routes/UserRoutes";
 import { useParams, useSearchParams } from "react-router"
 import { Link } from "react-router"
 import Paginacion from "../components/common/Paginacion";
+import Filtros from "../components/ui/Filtros";
 
 export default function Inventario() {
   const [opencat, setOpencat] = useState(false);
@@ -21,18 +22,34 @@ export default function Inventario() {
   }, [searchParams])
 
   const changePage = (newPage) => {
-    setSearchParams({ page: newPage })
-  }
+    const params = Object.fromEntries(searchParams.entries());
+    params.page = newPage;
+    setSearchParams(params);
+  };
+
+  const filtros = Object.fromEntries(
+    Object.entries({
+      categoria: searchParams.get("categoria"),
+      proveedor: searchParams.get("proveedor"),
+      precio_min: searchParams.get("precio_min"),
+      precio_max: searchParams.get("precio_max"),
+      stock_min: searchParams.get("stock_min"),
+      stock_max: searchParams.get("stock_max"),
+    }).filter(([_, v]) => v !== null && v !== "" && v !== "null")
+  );
 
   const Getdata = async () => {
     try {
-      let token = localStorage.getItem("access")
-      const res = await GetInventory(token, page)
-      setDatos(res)
+      let token = localStorage.getItem("access");
+      const params = new URLSearchParams({
+        ...filtros
+      }).toString();
+      const res = await GetInventory(token, page, params);
+      setDatos(res);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     Getdata()
@@ -91,6 +108,9 @@ export default function Inventario() {
         </div>
       </div>
       <div className={styles.main_inv_filter}>
+        <div>
+          <Filtros setSearchParams={setSearchParams} />
+        </div>
         <div className={styles.inventario}>
           {!datos ? <p>No hay productos disponibles.</p> : <>
             <table className={styles.table_cont}>
@@ -100,7 +120,7 @@ export default function Inventario() {
                   <th scope="col">Descripción</th>
                   <th scope="col">Categoria</th>
                   <th scope="col">Proveedor</th>
-                  <th scope="col">¿Maneja Lotes?</th>
+                  <th scope="col">Stock total</th>
                   <th scope="col">Precio por unidad</th>
                 </tr>
               </thead>
@@ -110,8 +130,8 @@ export default function Inventario() {
                 ))}
               </tbody>
             </table>
-            <div>
-              <Paginacion changePage={changePage} page={page} max_page={datos.data.total_pages} next={datos.data.has_next} previous={datos.data.has_previous} />
+            <div className={styles.pagination}>
+              {datos.data.conunt >= 1 && <Paginacion page={page} max_page={datos.data.total_pages} searchParams={searchParams} setSearchParams={setSearchParams} />}
             </div>
           </>
           }

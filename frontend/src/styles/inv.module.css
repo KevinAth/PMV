@@ -1,6 +1,7 @@
 .contenedor_principal {
   padding: 2% 5%;
 }
+
 .addcate_addprod {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -40,37 +41,45 @@
   padding: 2% 2%;
   border: 1px solid #08102e;
 }
-.inventario{
+
+.inventario {
   height: 100%;
+  min-height: 45rem;
 }
-.table_cont{
+
+.table_cont {
   height: 100%;
-  width:100%;
+  width: 100%;
   padding: 1rem;
   border-spacing: 0 10px;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-collapse: separate;
 }
+
 .table_cont td {
   text-align: center;
 }
-.item_table{
+
+.item_table {
   height: 4rem;
 }
 
 .tbody {
   height: 100%;
 }
-.tbody tr{
+
+.tbody tr {
   background: #0f172b80;
-  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
 }
-.item_table:hover{
+
+.item_table:hover {
   background-color: #0f172bf1;
   cursor: pointer;
 }
+
 th:first-child {
   border-radius: .5rem 0 0 .5rem;
 }
@@ -86,6 +95,6 @@ td:last-child {
   justify-self: center;
 }
 
-.col_nombre{
+.col_nombre {
   text-align: center;
 }

@@ -1,0 +1,83 @@
+.main_contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.contenedor {
+    width: 300px;
+    margin: 20px;
+}
+
+.track {
+    height: 6px;
+    width: 100%;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.thumb {
+    height: 20px;
+    width: 15px;
+    background-color: #419743;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.titulo {
+    padding-bottom: .3rem;
+    font: bold;
+    font-size: large;
+}
+
+.options {
+    min-width: 17rem;
+    color: black;
+}
+
+.div_button {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.button_buscar {
+    color: white;
+    background-color: #11998e;
+    cursor: pointer;
+    min-width: 8rem;
+    min-height: 2.5rem;
+    transition: 0.3s;
+
+    font-weight: bold;
+    border-radius: 0.9rem;
+    padding: 0.8rem;
+    border: none;
+}
+
+.button_buscar:hover {
+    background-color: #38ef7d;
+}
+
+.button_limpiar {
+    color: white;
+    background-color: #131b46;
+    border: 1px solid #38ef7d;
+    cursor: pointer;
+    min-width: 8rem;
+    min-height: 2.5rem;
+    transition: 0.3s;
+
+    font-weight: bold;
+    border-radius: 0.9rem;
+    padding: 0.8rem;
+    border: none;
+}
+
+.button_limpiar:hover {
+    background-color: #38ef7d;
+}
