@@ -109,7 +109,7 @@ export default function Inventario() {
       </div>
       <div className={styles.main_inv_filter}>
         <div>
-          <Filtros setSearchParams={setSearchParams} />
+          <Filtros setSearchParams={setSearchParams} opencat={opencat} />
         </div>
         <div className={styles.inventario}>
           {!datos ? <p>No hay productos disponibles.</p> : <>

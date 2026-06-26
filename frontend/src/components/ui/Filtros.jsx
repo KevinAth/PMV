@@ -5,34 +5,38 @@ import { GetVariables } from "../../routes/UserRoutes";
 import { Range, getTrackBackground } from "react-range";
 import styles from "../../styles/common/filters.module.css";
 
-export default function Filtros({ setSearchParams }) {
+export default function Filtros({ setSearchParams, opencat }) {
   const { control, handleSubmit, reset } = useForm();
 
   const [cat, setCat] = useState([]);
   const [prov, setProv] = useState([]);
 
+  const getDatos = async () => {
+    try {
+      const token = localStorage.getItem("access");
+      const datos = await GetVariables(token);
+      setCat(datos.data.categorias);
+      setProv(datos.data.proveedores);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const getDatos = async () => {
-      try {
-        const token = localStorage.getItem("access");
-        const datos = await GetVariables(token);
-        setCat(datos.data.categorias);
-        setProv(datos.data.proveedores);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     getDatos();
   }, []);
 
-  const [values, setValues] = useState([0, 200000]);
-  const [stock, setStock] = useState([0, 5000]);
+  useEffect(() => {
+    getDatos();
+  }, [opencat]);
+
+  const [values, setValues] = useState([0, 100000]);
+  const [stock, setStock] = useState([0, 3000]);
 
   const MINStock = 0;
-  const MAXStock = 5000;
+  const MAXStock = 3000;
 
   const MINvalor = 0;
-  const MAXvalor = 200000;
+  const MAXvalor = 100000;
 
   const categoriaOptions = cat.map((c) => ({
     value: c.id,

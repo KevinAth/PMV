@@ -16,7 +16,7 @@ export default function Paginacion({ page, next, previous, max_page, searchParam
         <nav className={styles.nav_pagin}>
           <ul className={styles.ul}>
             <li>
-              <a href={buildUrl(page - 1)}>{"< Anterior"}</a>
+              <a href={buildUrl(page - 1)}>{"🡨 Anterior"}</a>
             </li>
             <li className={styles.li}>
               <a className={styles.link} href={buildUrl(1)}>1</a>
@@ -36,7 +36,7 @@ export default function Paginacion({ page, next, previous, max_page, searchParam
               <a className={styles.link} href={buildUrl(max_page)}>{max_page}</a>
             </li>
             <li>
-              <a href={buildUrl(page + 1)}>{"Siguiente >"}</a>
+              <a href={buildUrl(page + 1)}>{"Siguiente 🡪"}</a>
             </li>
           </ul>
         </nav>
@@ -49,7 +49,7 @@ export default function Paginacion({ page, next, previous, max_page, searchParam
           <ul className={styles.ul}>
             {page != 1 &&
               <li>
-                <a href={buildUrl(page - 1)}>{"< Anterior"}</a>
+                <a href={buildUrl(page - 1)}>{"🡨 Anterior"}</a>
               </li>
             }
             <li className={styles.li}>
@@ -74,7 +74,7 @@ export default function Paginacion({ page, next, previous, max_page, searchParam
             }
             {page != max_page &&
               <li>
-                <a href={buildUrl(page + 1)}>{"Siguiente >"}</a>
+                <a href={buildUrl(page + 1)}>{"Siguiente 🡪"}</a>
               </li>
             }
           </ul>
@@ -87,7 +87,7 @@ export default function Paginacion({ page, next, previous, max_page, searchParam
         <nav className={styles.nav_pagin}>
           <ul className={styles.ul}>
             <li>
-              <a href={buildUrl(page - 1)}>{"<"}</a>
+              <a href={buildUrl(page - 1)}>{"🡨"}</a>
             </li>
             <li className={styles.li}>
               <a className={page == 1 ? styles.active : styles.link} href={buildUrl(1)}>1</a>
@@ -117,7 +117,7 @@ export default function Paginacion({ page, next, previous, max_page, searchParam
             </li>
             {page != max_page &&
               <li>
-                <a href={buildUrl(page + 1)}>{">"}</a>
+                <a href={buildUrl(page + 1)}>{"🡪"}</a>
               </li>
             }
           </ul>

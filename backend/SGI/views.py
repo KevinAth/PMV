@@ -178,6 +178,7 @@ def Get_variantes(request):
     res_cat = Categorias.objects.filter(usuario=request.user.id)
     proveedores = (res_prov.values("id","nombre"))
     categorias = (res_cat.values("id","nombre"))
+    print({"categorias":categorias.values("id"),"proveedor":proveedores.values("id")},request.user.id)
     return Response({"proveedores":proveedores,"categorias":categorias},status=status.HTTP_200_OK)
 
 # Obtener producto por id
