@@ -12,17 +12,21 @@ El sistema permite administrar y consultar información relacionada con los prod
 
 ![Inicio de sesión](./screenshots/login.png)
 
+### 📝 Registro
+
+![Registro](./screenshots/register.png)
+
 ### 🏠 Página principal
 
 ![Página principal](./screenshots/home.png)
 
-### 📦 Gestión de productos
-
-![Gestión de productos](./screenshots/products.png)
-
 ### 👁️ Información del producto
 
 ![Información del producto](./screenshots/product-detail.png)
+
+### 🏢 Proveedores
+
+![Proveedores](./screenshots/providers.png)
 
 ---
 
@@ -43,8 +47,10 @@ El proyecto está compuesto principalmente por:
 ## ✨ Funcionalidades
 
 * 🔐 Inicio de sesión.
+* 📝 Registro de usuarios.
 * 👤 Gestión de usuarios.
 * 📦 Gestión de productos.
+* 🏢 Gestión de proveedores.
 * ➕ Creación de productos.
 * ✏️ Edición de productos.
 * 🗑️ Eliminación de productos.
@@ -83,7 +89,7 @@ El proyecto está compuesto principalmente por:
 
 La aplicación utiliza una arquitectura dividida en frontend, backend y base de datos.
 
-```text id="j7h0by"
+```text
               ┌───────────────────┐
               │      Usuario      │
               └─────────┬─────────┘
@@ -111,7 +117,7 @@ La aplicación utiliza una arquitectura dividida en frontend, backend y base de 
 
 ## 📁 Estructura del proyecto
 
-```text id="w2xq1p"
+```text
 PMV/
 │
 ├── backend/
@@ -155,11 +161,17 @@ La información gestionada por el sistema se almacena en la base de datos y es u
 
 ---
 
-## 🔐 Inicio de sesión
+## 🏢 Gestión de proveedores
 
-El sistema cuenta con un módulo de **inicio de sesión** para controlar el acceso de los usuarios a la aplicación.
+El sistema permite gestionar la información relacionada con los proveedores de los productos.
 
-El usuario debe autenticarse para acceder a las funcionalidades disponibles dentro del sistema.
+Esta funcionalidad facilita mantener organizados los datos de los proveedores dentro del sistema de inventario.
+
+---
+
+## 🔐 Autenticación
+
+El sistema cuenta con funcionalidades de **registro e inicio de sesión**, permitiendo a los usuarios crear una cuenta y acceder posteriormente a la aplicación mediante sus credenciales.
 
 ---
 
@@ -169,7 +181,7 @@ El proyecto utiliza una base de datos para almacenar la información necesaria p
 
 El repositorio incluye el archivo:
 
-```text id="6o1h7j"
+```text
 database_sgi.sql
 ```
 
@@ -190,12 +202,7 @@ Durante el desarrollo se trabajaron conceptos como:
 * Gestión de bases de datos.
 * Operaciones CRUD.
 * Autenticación de usuarios.
+* Gestión de productos y proveedores.
 * Comunicación entre frontend y backend.
 * Organización de un proyecto Full Stack.
 * Control de versiones con Git y GitHub.
-
----
-
-### Repositorio
-
-https://github.com/KevinAth/PMV
