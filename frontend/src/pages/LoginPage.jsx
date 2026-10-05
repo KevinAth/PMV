@@ -29,7 +29,7 @@ function UserPage() {
             <img src={logo} alt="<--X--X--X-->" className={styles.logo} />
           </div>
           <div className={styles.message_div}>
-            <h1 className={styles.tittle_1}>Inicio de sesion.</h1>
+            <h1 className={styles.tittle_1}>Inicio de sesión.</h1>
             <p className={styles.message}>{message}</p>
           </div>
           <form
